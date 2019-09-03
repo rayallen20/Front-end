@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .carousel {
+            width: 500px;
+            height: 300px;
+            /*overflow: hidden;*/
+            overflow: visible;
+            white-space: nowrap;
+            margin: 100px auto;
+            border: 3px solid blue;
+        }
+
+        .carousel>img {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            transition: ease 0.5s;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+
+<script>
+    let data = [
+        "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
+        "https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg",
+        "https://static001.geekbang.org/resource/image/b6/4f/b6d65b2f12646a9fd6b8cb2b020d754f.jpg",
+        "https://static001.geekbang.org/resource/image/73/e4/730ea9c393def7975deceb48b3eb6fe4.jpg",
+    ];
+
+    /**
+     * @method 本方法用于给轮播组件的容器DOM对象增加一个classname
+     * @param {HTMLElement} container 轮播组件的容器DOM对象
+     * @return {HTMLElement} container 增加了classname之后的轮播组件容器DOM对象
+     * */
+    function addClassNameForContainer(container) {
+        container.classList.add("carousel");
+        return container;
+    }
+
+    /**
+     * @method 本方法用于根据list中元素的数量创建对应数量的img元素,并将创建的每个img作为container的子元素挂载到DOM树上
+     * @param {HTMLElement} container 轮播组件的容器DOM对象
+     * @return {void}
+     * */
+    function createAndAppendImgElements(container) {
+        for(let d of data) {
+            let e = document.createElement("img");
+            e.src = d;
+            container.appendChild(e);
+        }
+    }
+
+    /**
+     * @method 本方法用于每3秒切换1张图片 但仅改变2张图片的位置 同时实现将需要移入视口的图片移动到视口的右侧
+     * 以便所有图片在视口中呈现的效果均为:从右向左位移
+     * @param {HTMLElement} container 轮播组件的容器DOM对象
+     * @return {void}
+     * */
+    function alterTwoImg(container) {
+        let children = Array.prototype.slice.call(container.children);
+
+        // 要移出视口的img元素在数组中的下标
+        let outPosition = 0;
+
+        let nextImg = () => {
+            // 要移入视口的img元素在数组中的下标
+            let inPosition = outPosition + 1;
+
+            outPosition = outPosition % children.length;
+            inPosition = inPosition % children.length;
+
+            // 调试用 实在看不懂代码把它打开
+            console.log(outPosition);
+            console.log(inPosition);
+
+            let outImg = children[outPosition],
+                inImg = children[inPosition];
+
+            inImg.style.transition = "0s";
+            inImg.style.transform = `translate(${100 - 100 * inPosition}%)`;
+
+            // 调试用 实在看不懂代码把它打开
+            // console.log(inImg.style.transform);
+
+            setTimeout(() => {
+                // 通过JS将transition属性置空 CSS设置的transition属性才会生效
+                outImg.style.transition = "";
+                outImg.style.transform = `translate(${-100 - 100 * outPosition}%)`;
+
+                // 通过JS将transition属性置空 CSS设置的transition属性才会生效
+                inImg.style.transition = "";
+                inImg.style.transform = `translate(${-100 * inPosition}%)`;
+
+                outPosition = outPosition + 1;
+                // 这里写16或是多少 其实无所谓 因为在3000ms之内 outPosition和inPosition的值都不会改变
+            }, 16);
+            setTimeout(nextImg, 3000);
+        };
+        // setTimeout(nextImg, 3000);
+    }
+
+    /**
+     * @var {number} 本变量用于记录鼠标按下时的X坐标
+     * */
+    let downX;
+
+    /**
+     * @var {number} 本变量用于记录所有拖拽行为(含本次拖拽)对图片造成的水平位移像素值
+     * */
+    let totalX = 0;
+
+    /**
+     * @var {number} 本变量用于记录历史拖拽行为(不含本次拖拽)对图片造成的水平位移像素值
+     * */
+    let lastX = 0;
+
+    /**
+     * @method 本方法用于"鼠标按下"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象 // TODO: 这玩意儿具体是个啥我也不清楚 回头查查
+     * @return {void}
+     * */
+    let down = (event) => {
+        event.preventDefault();
+
+        // 记录鼠标按下时的X坐标
+        downX = event.clientX;
+
+        document.getElementById("container").addEventListener("mousemove", move);
+        document.getElementById("container").addEventListener("mouseup", up);
+    };
+
+    /**
+     * @method 本方法用于"鼠标移动"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    let move = (event) => {
+        /**
+         * @var {number} 本变量用于记录本次拖拽行为对图片造成的水平位移像素值
+         * */
+        let deltaX = event.clientX - downX;
+        totalX = lastX + deltaX;
+        // console.log("totalX = " +totalX);
+        console.log("deltaX = " + deltaX);
+        let children = Array.prototype.slice.call(document.getElementById("container").children);
+
+        for(let child of children) {
+            child.style.transition = "0s";
+            child.style.transform = `translate(${totalX}px)`;
+        }
+    };
+
+    /**
+     * @method 本方法用于"鼠标抬起"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    let up = (event) => {
+        console.log("up");
+        lastX = totalX;
+        console.log("lastX = " + lastX);
+        document.getElementById("container").removeEventListener("mousemove", move);
+        document.getElementById("container").removeEventListener("mouseup", up);
+    };
+
+    document.getElementById("container").addEventListener("mousedown", down);
+
+    createAndAppendImgElements(
+        addClassNameForContainer(document.getElementById("container"))
+    );
+
+    alterTwoImg(document.getElementById("container"));
+
+</script>
+</body>
+</html>

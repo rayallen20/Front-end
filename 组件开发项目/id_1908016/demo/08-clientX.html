@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper {
+            width: 500px;
+            height: 300px;
+            border: 1px solid deepskyblue;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper"></div>
+<script>
+    let startX;
+
+    let wrapper = document.getElementById("wrapper");
+
+    let start = (event) => {
+        startX = event.clientX;
+        wrapper.addEventListener("mousemove", move);
+        wrapper.addEventListener("mouseup", end);
+    };
+
+    let move = (event) => {
+        if(event.clientX === startX) {
+            console.log(true);
+        } else {
+            console.log("startX = " + startX);
+            console.log("move event.clientX = " + event.clientX);
+        }
+    };
+
+    let end = (event) => {
+        wrapper.removeEventListener("mousemove", move);
+        wrapper.removeEventListener("mouseup", end);
+    };
+
+    wrapper.addEventListener("mousedown", start);
+</script>
+</body>
+</html>

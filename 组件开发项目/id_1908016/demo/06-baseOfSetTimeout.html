@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #displayBox {
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            background-color: lightblue;
+            text-align: center;
+            line-height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div id="displayBox">0</div>
+
+<script>
+    /**
+     * @method 本方法用于为id=displayBox的DOM元素修改其中的文本内容
+     * 使该文本内容与用户停留在网页上的秒数相同 并在用户停留在该网页上指定时间(单位:s)后 弹出一个提示框
+     * @param {number} staySeconds
+     * @return {void}
+     * */
+    function countSecond(staySeconds) {
+        let e = document.getElementById("displayBox");
+        let content = Number(e.innerText);
+        // console.log(content);
+        // console.log(++content);
+        e.innerText = String(++content);
+        if(content === staySeconds) {
+            alert("you have stay on this page " + staySeconds + " seconds");
+        } else {
+            setTimeout(countSecond, 1000, staySeconds);
+        }
+    }
+
+    setTimeout(countSecond, 1000, 3);
+</script>
+</body>
+</html>

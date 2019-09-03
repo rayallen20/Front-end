@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            transition-property: width;
+            transition-duration: 5s;
+            background-color: blue;
+            /*cubic-bezier:绘制3次贝塞尔曲线 其中前2个参数组成一个点 后2个参数组成1个点 加上原点 绘制三次贝塞尔曲线*/
+            transition-timing-function: cubic-bezier(.17, .86, .73, .14);
+        }
+
+        .box:hover {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+</body>
+</html>

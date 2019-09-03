@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            display: inline-block;
+            white-space:nowrap;
+        }
+
+        .outer {
+            width: 1200px;
+            height: 200px;
+            background-color: #3EDFF4;
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+
+        /*猜测:inner出现在outer的旁边 因为inner水平向右产生了100%宽度的位移*/
+        /*结果:符合预期*/
+        .inner1 {
+            width: 300px;
+            height: 200px;
+            background-color: silver;
+            transform: translate(100%);
+        }
+
+        /*猜测:inner2把inner1给覆盖了*/
+        /*结果:不符合预期.inner2会出现在inner1的右侧.这是因为给div设置了行内块的缘故.*/
+        .inner2 {
+            width: 300px;
+            height: 200px;
+            background-color: cadetblue;
+            transform: translate(100%);
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="inner1">inner1</div><div class="inner2">inner2</div>
+</div>
+</body>
+</html>

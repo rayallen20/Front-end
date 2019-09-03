@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .carousel {
+            width: 500px;
+            height: 300px;
+            /*overflow: hidden;*/
+            overflow: visible;
+            white-space: nowrap;
+        }
+
+        .carousel>img {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            /*ease:以慢速开始,然后变快,最终以慢速结束*/
+            /*0.5s:在过渡效果开始前的时间 以秒计算(因为这里写了单位是秒)*/
+            transition: ease 0.5s;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+
+<script>
+    let data = [
+        "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
+        "https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg",
+        "https://static001.geekbang.org/resource/image/b6/4f/b6d65b2f12646a9fd6b8cb2b020d754f.jpg",
+        "https://static001.geekbang.org/resource/image/73/e4/730ea9c393def7975deceb48b3eb6fe4.jpg",
+    ];
+
+    class Carousel {
+        constructor(container) {
+            // _开头的属性表示私有属性 但实际上该属性并不会因为以_开头就真的成为一个私有属性
+            this._container = container;
+            this._container.classList.add("carousel");
+
+            // handler用于保存和时序相关的操作
+            this.handler = null;
+            this.data = null;
+        }
+
+        // 本方法用于渲染组件本体
+        render() {
+            // 根据数组中元素的数量创建img标签,并将这些img作为容器的子节点,挂载到DOM树上去
+            // TODO:这里写data和this.data 效果是一样的
+            for (let d of this.data) {
+                let e = document.createElement("img");
+                e.src = d;
+                this._container.appendChild(e);
+            }
+
+            // 将DOM元素变为数组
+            // TODO:这里写this._container和container效果是一样的
+            let children = Array.prototype.slice.call(this._container.children);
+
+            // 将this._container中的每一个子元素(实际上就是4个img元素)向左移动 N * -100个px
+            // 其中 N为自然数 且 N∈[1,4]; 虽然定义了position初始值为0,但是一旦进入函数中它的最小值就是1
+            // 因为有个++
+            let position = 0;
+            let nextFrame = function () {
+                position++;
+                console.log(position);
+                position = position % children.length;
+
+                // 实际上position到了这个for循环中,它的取值范围为[0,3] 因为是先++再取余
+                // 当position取值为0时,所有img会统一做一次向右移动400%的操作 使得再次显示第1张图片
+                for(let child of children) {
+                    child.style.transform = `translate(${ - 100 * position}%)`;
+                }
+
+                // nextFrame()被callBack之后 再次将自己放到待callBack的队列中 使得自己一直在被callBack
+                setTimeout(nextFrame, 3000);
+            };
+
+            // 首次将nextFrame()放入callBack的队列中
+            setTimeout(nextFrame, 3000);
+        }
+    }
+
+    let carousel = new Carousel(document.getElementById("container"));
+    carousel.data = data;
+    carousel.render();
+</script>
+</body>
+</html>

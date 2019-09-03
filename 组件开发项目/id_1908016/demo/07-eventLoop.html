@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper {
+            width: 500px;
+            height: 500px;
+            border:1px solid navy;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper"></div>
+
+<script>
+    // 记录鼠标点击时的X坐标
+    let startX;
+
+    // 记录每次拖拽在X轴上的距离
+    let displacementX;
+
+    // 记录总X轴的位移 初始化0个px
+    let totalDisplacementX = 0;
+
+    let wrapper = document.getElementById("wrapper");
+
+    let start = (event) => {
+        event.preventDefault();
+
+        // 记录鼠标点击时的X坐标
+        startX = event.clientX;
+
+        wrapper.addEventListener("mousemove", move);
+        wrapper.addEventListener("mouseup", end);
+    };
+
+    let move = (event) => {
+        // 计算本次位移在X轴上的距离
+        displacementX = event.clientX - startX;
+    };
+
+    let end = (event) => {
+
+        // 打印本次X轴移动距离
+        console.log("本次在X轴上拖拽的距离为:" + Math.abs(displacementX) + "px");
+
+        // 打印总X轴的距离
+        totalDisplacementX += displacementX;
+        console.log("总计在X轴上拖拽的距离为" + Math.abs(totalDisplacementX) + "px");
+
+        wrapper.removeEventListener("mousemove", move);
+        wrapper.removeEventListener("mouseup", end);
+    };
+
+    wrapper.addEventListener("mousedown", start);
+
+</script>
+</body>
+</html>

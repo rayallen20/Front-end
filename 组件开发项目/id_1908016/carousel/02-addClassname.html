@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .carousel {
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 100px auto;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+
+<script>
+    /**
+     * @method 本方法用于给轮播组件的容器DOM对象增加一个classname
+     * @param {HTMLElement} container 轮播组件的容器DOM对象
+     * @return {HTMLElement} container 增加了classname之后的轮播组件容器DOM对象
+     * */
+    function addClassNameForContainer(container) {
+        container.classList.add("carousel");
+        return container;
+    }
+
+    addClassNameForContainer(document.getElementById("container"));
+</script>
+</body>
+</html>

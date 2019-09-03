@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            transition-property: width;
+            transition-duration: 5s;
+            transition-timing-function: cubic-bezier(.17, .86, .73, .14);
+            transition-delay: 3s;
+        }
+
+        .box:hover {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+</body>
+</html>
