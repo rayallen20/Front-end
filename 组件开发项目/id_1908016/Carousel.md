@@ -258,7 +258,7 @@ Tips:**需求文档要有优先级的概念**(五星重要).
 	c. **P1**:点击向左按钮向前播放,点击向右按钮向后播放
 
 
-## 2.2 轮播的实现--解决排版布局和动画的问题
+## 2.2 轮播的实现
 
 ### 2.2.1 定时器的使用
 
@@ -481,7 +481,7 @@ function createAndAppendImgElements(container) {
 }
 
 createAndAppendImgElements(
-    addClassNameForContainer(document.getElementById("container"));
+    addClassNameForContainer(document.getElementById("container"))
 );
 ```
 
@@ -626,7 +626,7 @@ setTimeout(alterImg, 3000, document.getElementById("container"), 1);
 ```
 
 示意图如下:
-		![Image text](http://strike.frontend.codingdeath.com/transform%E5%B1%9E%E6%80%A7%E5%80%BC%E4%B8%8EalterImg%28%29%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E5%85%B3%E7%B3%BB%E7%A4%BA%E6%84%8F%E5%9B%BE.pdf)
+		![Image text](http://strike.frontend.codingdeath.com/transform%E5%B1%9E%E6%80%A7%E5%80%BC%E4%B8%8EalterImg%28%29%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E5%85%B3%E7%B3%BB%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
 
 到了这一步,实际上切换图片的功能就已经实现了.但是这段代码写的"很不JS"----一看就是不知道学啥的跑来写JS了.明显变量position应该使用闭包传递,所以我们来改一改:
 
@@ -656,7 +656,7 @@ alterImg(document.getElementById("container"));
 
 实际上这里遗留了一个问题:每当所有图片轮播完毕,都会出现一次**<font color="red">不正确</font>**的动画效果:所有图片从左向右移动.正确的动画效果应该是:所有图片一直从右向左移动.这个问题我们将在下一小节解决.
 
-####2.2.3.4 图片切换时的动画效果
+#### 2.2.3.4 图片切换时的动画效果
 
 这部分也是简单的,毕竟在我们的技能树里,前文已经点过这个技能了.给容器中的图片加一个过渡效果就可以了.
 
@@ -669,7 +669,7 @@ alterImg(document.getElementById("container"));
 }
 ```
 
-####2.2.3.5 切换图片--只移动2张
+#### 2.2.3.5 切换图片--只移动2张
 
 根据上文中实现,我们可以得出这样的一个结论:**切换图片时,是将所有的img元素一起做水平位置上的位移**.
 
@@ -720,7 +720,7 @@ function alterTwoImg(container) {
 ```
 
 示意图如下:
-		![Image text](http://strike.frontend.codingdeath.com/transform%E5%B1%9E%E6%80%A7%E5%80%BC%E4%B8%8EalterImg%28%29%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E5%85%B3%E7%B3%BB%E7%A4%BA%E6%84%8F%E5%9B%BE--%E5%8F%AA%E7%A7%BB%E5%8A%A82%E5%BC%A0.pdf)
+		![Image text](http://strike.frontend.codingdeath.com/transform%E5%B1%9E%E6%80%A7%E5%80%BC%E4%B8%8EalterImg%28%29%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E5%85%B3%E7%B3%BB%E7%A4%BA%E6%84%8F%E5%9B%BE--%E5%8F%AA%E7%A7%BB%E5%8A%A82%E5%BC%A0.jpg)
 		
 至此,我们已经实现了**只移动2张图片**,换言之就是:**只移动当次轮播需要发生位移的图片**.达到了提升性能的效果.
 
@@ -953,7 +953,7 @@ JavaScript语言的设计者意识到,这种场景下主线程完全可以不管
 此处也是多提一嘴:实际上这个模型有些像MQ,但是和MQ不同的是:程序作为MQ的Consumer,当消费了一条Message后,可以选择将该Message放回MQ中(可选择放置到队列头部或队列尾部),即Consumer负责处理Message的去向;而此处提到的task queue,则是当有事件被触发时,有一个Producer(实际上这个Producer是啥我也不清楚,只是定性的可以理解为一种"事件驱动机制".但Message的去向一定不是由Consumer来决定,甚至Consumer都没有决定权)向这个task queue中放入Message.
 
 主线程和任务队列的示意图如下:
-		![Image text](http://strike.frontend.codingdeath.com/JavaScript%E4%B8%BB%E7%BA%BF%E7%A8%8B%E5%92%8C%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.pdf)
+		![Image text](http://strike.frontend.codingdeath.com/JavaScript%E4%B8%BB%E7%BA%BF%E7%A8%8B%E5%92%8C%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
 
 ##### c. 事件和callback
 
@@ -970,7 +970,10 @@ JavaScript语言的设计者意识到,这种场景下主线程完全可以不管
 "任务队列"中除了可以放置异步任务的事件外,还可以放置定时事件.即指定一段代码在某个时间之后执行.即定时器(timer)功能.以
 
 ```javascript
-setTimeout(() => {// some code }, 0);
+setTimeout(() => {
+    // some code }
+    // , 0);
+});
 ```
 
 为例,它的含义为:指定某个任务在主线程**最早的空闲时间**执行,换言之就是**尽可能早**的执行.但实际上它的"尽可能早",就是向"任务队列"的尾部添加一个事件,因此需要等到同步任务和"任务队列"中的现有事件都处理完,才会被执行.
@@ -1399,7 +1402,7 @@ document.getElementById("container").addEventListener("mousedown", down);
 
 示意图如下:
 
-![Image text](http://strike.frontend.codingdeath.com/%E8%B7%9D%E7%A6%BB%E8%A7%86%E5%8F%A3%E6%9C%80%E8%BF%91%E5%9B%BE%E7%89%87%E7%9A%84%E5%AE%9A%E4%B9%89%E7%A4%BA%E6%84%8F%E5%9B%BE.pdf)
+![Image text](http://strike.frontend.codingdeath.com/%E8%B7%9D%E7%A6%BB%E8%A7%86%E5%8F%A3%E6%9C%80%E8%BF%91%E5%9B%BE%E7%89%87%E7%9A%84%E5%AE%9A%E4%B9%89%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
 
 定义清楚了,那么该怎么实现呢?实际上我们不需要真正如图所示的去算2个距离,然后比大小,最终得出应该显示在视口上的图片.我们只需要作如下步骤即可:
 
@@ -1429,7 +1432,7 @@ document.getElementById("container").addEventListener("mousedown", down);
 
 rate < 0.5时的各个距离示意图如下:
 
-![Image text](http://strike.frontend.codingdeath.com/%E8%B7%9D%E7%A6%BB%E8%A7%86%E5%8F%A3%E6%9C%80%E8%BF%91%E5%9B%BE%E7%89%87-rate%20_%200.5.pdf)
+![Image text](http://strike.frontend.codingdeath.com/%E8%B7%9D%E7%A6%BB%E8%A7%86%E5%8F%A3%E6%9C%80%E8%BF%91%E5%9B%BE%E7%89%87-rate%20_%200.5.jpg)
 
 此处重复一遍需求:若rate < 0.5,则根据需求,图片1应被放入视口中.
 
@@ -1443,7 +1446,7 @@ rate < 0.5时的各个距离示意图如下:
 
 rate < 0.5时的各个距离示意图如下:
 
-![Image text](http://strike.frontend.codingdeath.com/%E8%B7%9D%E7%A6%BB%E8%A7%86%E5%8F%A3%E6%9C%80%E8%BF%91%E5%9B%BE%E7%89%87-rate%20%E2%89%A5%200.5.pdf)
+![Image text](http://strike.frontend.codingdeath.com/%E8%B7%9D%E7%A6%BB%E8%A7%86%E5%8F%A3%E6%9C%80%E8%BF%91%E5%9B%BE%E7%89%87-rate%20%E2%89%A5%200.5.jpg)
 
 此处重复一遍需求:若rate < 0.5,则根据需求,图片2应被放入视口中.
 
@@ -1548,12 +1551,603 @@ let up = (event) => {
 
 示意图如下:
 
-![Image text](http://strike.frontend.codingdeath.com/totalX%E4%B8%8E%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E7%9A%84%E7%AC%A6%E5%8F%B7%E5%85%B3%E7%B3%BB.pdf)
+![Image text](http://strike.frontend.codingdeath.com/totalX%E4%B8%8E%E6%95%B0%E7%BB%84%E4%B8%8B%E6%A0%87%E7%9A%84%E7%AC%A6%E5%8F%B7%E5%85%B3%E7%B3%BB.jpg)
 
-因此
+但我们预期中的inPosition是没有负号的(因为数组的下标是没有负号的).这也就意味着我们需要调整上文代码中计算得出的inPosition值(以下简称inPosition计算值),使其能够表示应当移入视口的图片下标(以下简称inPosition正确值).
+
+此处我们来列一下inPosition计算值和inPosition正确值之间的关系:
+
+![Image text](http://strike.frontend.codingdeath.com/inPosition%E8%AE%A1%E7%AE%97%E5%80%BC%E4%B8%8E%E6%AD%A3%E7%A1%AE%E5%80%BC%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB.png)
+
+根据这个映射关系,我们需要3步操作,将inPosition计算值转化为inPosition正确值:
+
+- step1. 对inPosition计算值取反,使得少部分计算值和正确值相同(计算值为-3、-2、-1、0时可满足此条件);
+- step2. 当inPosition计算值∈[1, +∞)时,取反后inPosition计算值∈(-∞, -1],此时inPosition正确值为0,即Math.max(0,-inPosition);
+- step3. 当inPosition计算值∈(-∞, -4]时,取反后inPosition计算值∈[4, +∞),此时inPosition正确值为3,即Math.min(3, -inPosition);
+
+但是实际上step2与step3之间并没有一个逻辑上的递进关系,孰先孰后都可以,因此step2和step3的代码可以简化为1行:
+
+```javascript
+// 此处的3是指数组长度
+inPosition = Math.min(3, Math.max(0, -inPosition)); 
+```
+
+因此,修改后的up()函数的代码为:
+
+```javascript
+/**
+ * @method 本方法用于"鼠标抬起"事件被触发时的callback
+ * @param {MouseEvent} event 事件对象
+ * @return {void}
+ * */
+let up = (event) => {
+    // console.log("up");
+    lastX = totalX;
+    // console.log("totalX = " + totalX);
+    // console.log("totalX = " + Math.abs(totalX));
+
+    let children = Array.prototype.slice.call(document.getElementById("container").children);
+    let inPosition = -Math.round(totalX / 500);
+
+    // console.log("origin inPosition = " + inPosition);
+
+    inPosition = Math.min(children.length-1, Math.max(0, inPosition));
+
+    // console.log("after change inPosition = " + inPosition);
+
+    lastX = inPosition * -500;
+
+    // console.log("final count lastX = " + lastX);
+    // console.log("final totalX = " + totalX);
+
+    for (let child of children) {
+        child.style.transition = "";
+        child.style.transform = `translate(${lastX}px)`;
+    }
+
+    document.getElementById("container").removeEventListener("mousemove", move);
+    document.getElementById("container").removeEventListener("mouseup", up);
+};
+```
+
+此处需要注意的是:由于我们将inPosition值统一置为了一个自然数且inPosition∈[0, 3],所以我们需要在计算lastX时,将负号交给图片宽度(即500)来处理,所以修改了计算lastX的代码.
 
 
+#### 2.3.2.7 事件的监听--container还是document?
 
-#### 2.3.2.6 事件的监听--container还是document?
+截至目前为止,实际上我们已经比较完善的实现了一个轮播功能.但是还有一个比较不符合人类常理认知的问题:当鼠标按下后(即开始拖拽后),向整个container的左下方移动(即鼠标移动轨迹为一条弧线,该轨迹形似函数f(x)=-x²的图像中 x∈(-∞,0]部分的图像),当鼠标在垂直方向上移出container的高度时,会出现一个诡异的现象:图片不受鼠标拖拽的控制了.
+
+原因:这是因为我们监听的"鼠标移动"和"鼠标抬起"事件,是针对container的.所以当鼠标离开container时,这两个事件就不会再被监听了,进而导致的情况就是:对应的callback也不会再被调用了,因此视觉上看起来图片就hang在原地了.
+
+解决方案:实际上比较符合人类常理认知的需求是:
+
+- 1. 鼠标在container内按下,开始拖拽
+- 2. 鼠标在整个页面的任意位置上移动,图片均随拖拽而移动
+- 3. 鼠标在整个页面的任意位置上放开,图片不再移动
+
+根据这个需求,我们需要将"鼠标移动"和"鼠标抬起"这两个事件的监听,从对container的监听,修改为对整个文档(也就是document)的监听.
+
+修改后的down()函数和up()函数如下:
+
+```javascript
+/**
+ * @method 本方法用于"鼠标按下"事件被触发时的callback
+ * @param {MouseEvent} event 事件对象 // TODO: 这玩意儿具体是个啥我也不清楚 回头查查
+ * @return {void}
+ * */
+let down = (event) => {
+    event.preventDefault();
+
+    // 记录鼠标按下时的X坐标
+    downX = event.clientX;
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+};
+
+/**
+ * @method 本方法用于"鼠标抬起"事件被触发时的callback
+ * @param {MouseEvent} event 事件对象
+ * @return {void}
+ * */
+let up = (event) => {
+    lastX = totalX;
+
+    let children = Array.prototype.slice.call(document.getElementById("container").children);
+
+    let inPosition = -Math.round(totalX / 500);
+    inPosition = Math.min(children.length-1, Math.max(0, inPosition));
+
+    lastX = inPosition * -500;
+
+    for (let child of children) {
+        child.style.transition = "";
+        child.style.transform = `translate(${lastX}px)`;
+    }
+
+    document.removeEventListener("mousemove", move);
+    document.removeEventListener("mouseup", up);
+};
+```
+
+## 2.3 轮播库的封装
+
+在上文中,我们已经实现了一个完整的轮播功能.但是还有一个巨大的问题:这一坨POP的代码,仅仅能够实现功能.受代码组织形式的影响,他们无法成为一个库,进而让这个库可以被其他开发者调用.因此我们需要将这些函数封装成一个类,以便其他开发者可以调用.
+
+### 2.3.1 第一个坑--普通函数函数体内的this与箭头函数函数体内的this
+
+初步的想法我们只要把之前实现的所有函数写到一个类(Carousel类 即轮播类)中,并将之前定义的变量写为该类的成员属性即可.HTML和JS代码如下:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .carousel {
+            width: 500px;
+            height: 300px;
+            /*overflow: hidden;*/
+            overflow: visible;
+            white-space: nowrap;
+            margin: 100px auto;
+            border: 3px solid blue;
+        }
+
+        .carousel>img {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            transition: ease 0.5s;
+        }
+    </style>
+    <script src="17-carousel-normalFuncOrArrowFunc.js"></script>
+</head>
+<body>
+<div id="container">
+
+</div>
+<script>
+    let data = [
+        "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
+        "https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg",
+        "https://static001.geekbang.org/resource/image/b6/4f/b6d65b2f12646a9fd6b8cb2b020d754f.jpg",
+        "https://static001.geekbang.org/resource/image/73/e4/730ea9c393def7975deceb48b3eb6fe4.jpg",
+    ];
+
+    let carousel = new Carousel(document.getElementById("container"), data);
+</script>
+</body>
+</html>
+```
+
+```javascript
+class Carousel {
+    constructor(container, data) {
+        this._container = container;
+        this._outPosition = 0;
+        this._inPosition = null;
+        this._data = data;
+        this._downX = 0;
+        this._totalX = 0;
+        this._lastX = 0;
+        this._children = null;
+        this.addClassNameForContainer();
+        this.createAndAppendImgElements();
+        this.alterTwoImg();
+    }
+
+    /**
+     * @method 本方法用于给轮播组件的容器DOM对象增加一个classname
+     * @return {void}
+     * */
+    addClassNameForContainer() {
+        this._container.classList.add("carousel");
+    }
+
+    /**
+     * @method 本方法用于根据list中元素的数量创建对应数量的img元素,并将创建的每个img作为container的子元素挂载到DOM树上
+     * @return {void}
+     * */
+    createAndAppendImgElements() {
+        for(let d of this._data) {
+            let e = document.createElement("img");
+            e.src = d;
+            this._container.appendChild(e);
+        }
+    }
+
+    /**
+     * @method 本方法用于每3秒切换1张图片 但仅改变2张图片的位置 同时实现将需要移入视口的图片移动到视口的右侧
+     * 以便所有图片在视口中呈现的效果均为:从右向左位移
+     * @return {void}
+     * */
+    alterTwoImg() {
+        this._children = Array.prototype.slice.call(this._container.children);
+
+        let nextImg = () => {
+            this._inPosition = this._outPosition + 1;
+            this._outPosition = this._outPosition % this._children.length;
+            this._inPosition = this._inPosition % this._children.length;
+
+            let outImg = this._children[this._outPosition],
+                inImg = this._children[this._inPosition];
+
+            inImg.style.transition = "0s";
+            inImg.style.transform = `translate(${100 - 100 * this._inPosition}%)`;
+
+            setTimeout(() => {
+                outImg.style.transition = "";
+                outImg.style.transform = `translate(${-100 - 100 * this._outPosition}%)`;
+
+                inImg.style.transition = "";
+                inImg.style.transform = `translate(${-100 * this._inPosition}%)`;
+
+                this._outPosition = this._outPosition + 1;
+            }, 16);
+            setTimeout(nextImg, 3000);
+        };
+
+        // TODO:此处由于需要动画库的支持 所以暂时无法实现既拖拽又轮播的功能
+        // setTimeout(nextImg, 3000);
+        
+        this._container.addEventListener("mousedown", this.down);
+    }
+
+    /**
+     * @method 本方法用于"鼠标按下"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    down(event) {
+        console.log(this);
+        event.preventDefault();
+
+        // 记录鼠标按下时的X坐标
+        this._downX = event.clientX;
+
+        document.addEventListener("mousemove", this.move);
+        document.addEventListener("mouseup", this.up);
+    }
+
+    /**
+     * @method 本方法用于"鼠标移动"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    move(event) {
+        console.log("move");
+        event.preventDefault();
+        /**
+         * @var {number} 本变量用于记录本次拖拽行为对图片造成的水平位移像素值
+         * */
+        let deltaX = event.clientX - this._downX;
+        this._totalX = this._lastX + deltaX;
+
+        for(let child of this._children) {
+            child.style.transition = "0s";
+            child.style.transform = `translate(${this._totalX}px)`;
+        }
+    }
+
+    /**
+     * @method 本方法用于"鼠标抬起"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    up(event) {
+        this._lastX = this._totalX;
+
+        this._inPosition = -Math.round(this._totalX / 500);
+        this._inPosition = Math.min(this._children.length-1, Math.max(0, this._inPosition));
+
+        this._lastX = this._inPosition * -500;
+
+        for (let child of this._children) {
+            child.style.transition = "";
+            child.style.transform = `translate(${this._lastX}px)`;
+        }
+
+        document.removeEventListener("mousemove", this.move);
+        document.removeEventListener("mouseup", this.up);
+    }
+}
+```
+
+跑起来之后我们发现了一个问题:成员方法down()能够被调用到,但成员方法move()与成员方法up()无法被调用到.为什么会出现这种情况呢?
+
+答案:这与普通函数中的this指针的指向有关.普通函数的this指针,指向的是**函数的调用者**.
+
+先回答这个问题的前半部分:为什么down()方法能被调用到呢?这里我们就要看alterTwoImg()方法了.首先alterTwoImg()方法是个普通函数,根据之前的定义,普通函数的this指针,指向的是函数的调用者.alterTwoImg()方法在Carousel类的构造中被调用,因此该方法的方法体内的this,指向的是Carousel类的实例.因此在alterTwoImg()方法中调用this.down,是能够调用到的.
+
+再回答这个问题的后半部分:为什么move()和up()方法无法被调用到?这里需要看down()方法.down()方法作为一个普通函数,根据之前的定义,普通函数的this指针指向的是函数的调用者.那么问题来了:谁是down()方法的调用者?看下面一行代码:
+
+```javascript
+this._container.addEventListener("mousedown", this.down);
+```
+
+这句话的意思非常明确:当鼠标按下事件被触发时,调用方法this.down.可是问题在于:谁来调用this.down?我们在down()方法中打印了this,发现this指针指向的是一个DOM元素(也就是this._container).这就足以证明:是这个DOM元素调用了down()方法.换言之:此时down()方法的方法体内的this指针,指向的是一个DOM元素.那么这个DOM元素必然没有move()和up()方法.因此move()方法和up()方法没有被调用到.
+
+那么,怎么破呢?
+
+解决方案:箭头函数.[箭头函数的函数体内的this指针指向的是函数定义时所在的对象,而非使用时所在的对象.](http://es6.ruanyifeng.com/#docs/function#%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E7%82%B9)
+
+根据这个定义,我们只要在绑定/解绑事件时使用箭头函数的方式调用up()、move()、down()即可.修改后的JS代码如下:
+
+```javascript
+class Carousel {
+    constructor(container, data) {
+        this._container = container;
+        this._outPosition = 0;
+        this._inPosition = null;
+        this._data = data;
+        this._downX = 0;
+        this._totalX = 0;
+        this._lastX = 0;
+        this._children = null;
+        this.addClassNameForContainer();
+        this.createAndAppendImgElements();
+        this.alterTwoImg();
+    }
+
+    /**
+     * @method 本方法用于给轮播组件的容器DOM对象增加一个classname
+     * @return {void}
+     * */
+    addClassNameForContainer() {
+        this._container.classList.add("carousel");
+    }
+
+    /**
+     * @method 本方法用于根据list中元素的数量创建对应数量的img元素,并将创建的每个img作为container的子元素挂载到DOM树上
+     * @return {void}
+     * */
+    createAndAppendImgElements() {
+        for(let d of this._data) {
+            let e = document.createElement("img");
+            e.src = d;
+            this._container.appendChild(e);
+        }
+    }
+
+    /**
+     * @method 本方法用于每3秒切换1张图片 但仅改变2张图片的位置 同时实现将需要移入视口的图片移动到视口的右侧
+     * 以便所有图片在视口中呈现的效果均为:从右向左位移
+     * @return {void}
+     * */
+    alterTwoImg() {
+        this._children = Array.prototype.slice.call(this._container.children);
+
+        let nextImg = () => {
+            this._inPosition = this._outPosition + 1;
+            this._outPosition = this._outPosition % this._children.length;
+            this._inPosition = this._inPosition % this._children.length;
+
+            let outImg = this._children[this._outPosition],
+                inImg = this._children[this._inPosition];
+
+            inImg.style.transition = "0s";
+            inImg.style.transform = `translate(${100 - 100 * this._inPosition}%)`;
+
+            setTimeout(() => {
+                outImg.style.transition = "";
+                outImg.style.transform = `translate(${-100 - 100 * this._outPosition}%)`;
+
+                inImg.style.transition = "";
+                inImg.style.transform = `translate(${-100 * this._inPosition}%)`;
+
+                this._outPosition = this._outPosition + 1;
+            }, 16);
+            setTimeout(nextImg, 3000);
+        };
+
+        // TODO:此处由于需要动画库的支持 所以暂时无法实现既拖拽又轮播的功能
+        // setTimeout(nextImg, 3000);
+        this._container.addEventListener("mousedown", (event) => {this.down(event)});
+    }
+
+    /**
+     * @method 本方法用于"鼠标按下"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    down(event) {
+        console.log(this);
+        event.preventDefault();
+
+        // 记录鼠标按下时的X坐标
+        this._downX = event.clientX;
+
+        document.addEventListener("mousemove", (event) => {this.move(event)});
+        document.addEventListener("mouseup", (event) => {this.up(event)});
+    }
+
+    /**
+     * @method 本方法用于"鼠标移动"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    move(event) {
+        console.log("move");
+        event.preventDefault();
+        /**
+         * @var {number} 本变量用于记录本次拖拽行为对图片造成的水平位移像素值
+         * */
+        let deltaX = event.clientX - this._downX;
+        this._totalX = this._lastX + deltaX;
+
+        for(let child of this._children) {
+            child.style.transition = "0s";
+            child.style.transform = `translate(${this._totalX}px)`;
+        }
+    }
+
+    /**
+     * @method 本方法用于"鼠标抬起"事件被触发时的callback
+     * @param {MouseEvent} event 事件对象
+     * @return {void}
+     * */
+    up(event) {
+        this._lastX = this._totalX;
+
+        this._inPosition = -Math.round(this._totalX / 500);
+        this._inPosition = Math.min(this._children.length-1, Math.max(0, this._inPosition));
+
+        this._lastX = this._inPosition * -500;
+
+        for (let child of this._children) {
+            child.style.transition = "";
+            child.style.transform = `translate(${this._lastX}px)`;
+        }
+
+        document.removeEventListener("mousemove", (event) => {this.move(event)});
+        document.removeEventListener("mouseup", (event) => {this.up(event)});
+    }
+}
+```
+
+再运行一下,确实我们解决的move()和up()调用不起来的问题,但我们引入了一个新的问题:无法解除事件的绑定.也就是我们的removeEventListener()失效了.这个问题我们下一小节解决.
+
+### 2.3.2 第二个坑--addEventListener()与removeEventListener()的参数一致性问题
+
+欲要解决纷争,必先陷入纷争.--审判天使
+
+所以我们就要先明白,这个问题是如何产生的:造成removeEventListener()失效的原因在于:由于addEventListener()时绑定的callback是一个匿名函数(也就是我们上文中使用的箭头函数),所以在removeEventListener()时,是无法找到这个函数的,因此解绑失效.
+
+解决方案:将callback定义为Carousel类的成员属性,以便能够在addEventListener()时以普通函数的形式(实际上这几个成员属性也是箭头函数)绑定事件与callback之间的关系,进而在removeEventListener()时能够指明需要解绑的事件与函数.
+
+修改后的JS代码如下:
+
+```javascript
+class Carousel {
+    constructor(container, data) {
+        this._container = container;
+        this._outPosition = 0;
+        this._inPosition = null;
+        this._data = data;
+        this._downX = 0;
+        this._totalX = 0;
+        this._lastX = 0;
+        this._children = null;
+
+        this.down = (event) => {
+            console.log(this);
+            event.preventDefault();
+
+            // 记录鼠标按下时的X坐标
+            this._downX = event.clientX;
+
+            document.addEventListener("mousemove", this.move);
+            document.addEventListener("mouseup", this.up);
+        };
+
+        this.move = (event) => {
+            console.log("move");
+            event.preventDefault();
+            /**
+             * @var {number} 本变量用于记录本次拖拽行为对图片造成的水平位移像素值
+             * */
+            let deltaX = event.clientX - this._downX;
+            this._totalX = this._lastX + deltaX;
+
+            for(let child of this._children) {
+                child.style.transition = "0s";
+                child.style.transform = `translate(${this._totalX}px)`;
+            }
+        };
+
+        this.up = (event) => {
+            this._lastX = this._totalX;
+
+            this._inPosition = -Math.round(this._totalX / 500);
+            this._inPosition = Math.min(this._children.length-1, Math.max(0, this._inPosition));
+
+            this._lastX = this._inPosition * -500;
+
+            for (let child of this._children) {
+                child.style.transition = "";
+                child.style.transform = `translate(${this._lastX}px)`;
+            }
+
+            document.removeEventListener("mousemove", this.move);
+            document.removeEventListener("mouseup", this.up);
+        };
+
+        this.addClassNameForContainer();
+        this.createAndAppendImgElements();
+        this.alterTwoImg();
+    }
+
+    /**
+     * @method 本方法用于给轮播组件的容器DOM对象增加一个classname
+     * @return {void}
+     * */
+    addClassNameForContainer() {
+        this._container.classList.add("carousel");
+    }
+
+    /**
+     * @method 本方法用于根据list中元素的数量创建对应数量的img元素,并将创建的每个img作为container的子元素挂载到DOM树上
+     * @return {void}
+     * */
+    createAndAppendImgElements() {
+        for(let d of this._data) {
+            let e = document.createElement("img");
+            e.src = d;
+            this._container.appendChild(e);
+        }
+    }
+
+    /**
+     * @method 本方法用于每3秒切换1张图片 但仅改变2张图片的位置 同时实现将需要移入视口的图片移动到视口的右侧
+     * 以便所有图片在视口中呈现的效果均为:从右向左位移
+     * @return {void}
+     * */
+    alterTwoImg() {
+        this._children = Array.prototype.slice.call(this._container.children);
+
+        let nextImg = () => {
+            this._inPosition = this._outPosition + 1;
+            this._outPosition = this._outPosition % this._children.length;
+            this._inPosition = this._inPosition % this._children.length;
+
+            let outImg = this._children[this._outPosition],
+                inImg = this._children[this._inPosition];
+
+            inImg.style.transition = "0s";
+            inImg.style.transform = `translate(${100 - 100 * this._inPosition}%)`;
+
+            setTimeout(() => {
+                outImg.style.transition = "";
+                outImg.style.transform = `translate(${-100 - 100 * this._outPosition}%)`;
+
+                inImg.style.transition = "";
+                inImg.style.transform = `translate(${-100 * this._inPosition}%)`;
+
+                this._outPosition = this._outPosition + 1;
+            }, 16);
+            setTimeout(nextImg, 3000);
+        };
+
+        // TODO:此处由于需要动画库的支持 所以暂时无法实现既拖拽又轮播的功能
+        // setTimeout(nextImg, 3000);
+        this._container.addEventListener("mousedown", this.down);
+    }
+}
+```
+
+此处唯一需要注意的是构造中的代码书写顺序:
+
+一定要先定义this.down、this.move、this.up,再去调用它们.换言之,如果在构造中,先调用alterTwoImg(),再去定义this.down、this.move、this.up,则无法绑定事件,因为此时在alterTwoImg()被执行时,this.down尚未被定义,此时在alterTwoImg()方法中打印this.down,结果为undefined.
+
+比较好的构造函数代码书写顺序:
+
+- 1. 赋值
+- 2. 绑定函数
+- 3. 调用函数
+
+至此,轮播库的实现已全部结束.完结撒花.
+
 
 

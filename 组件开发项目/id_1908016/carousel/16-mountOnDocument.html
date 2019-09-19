@@ -10,10 +10,7 @@
             /*overflow: hidden;*/
             overflow: visible;
             white-space: nowrap;
-            /*margin: 100px auto;*/
-            margin-top: 100px;
-            /*margin-left: 3000px;*/
-            margin-right: 3000px;
+            margin: 100px auto;
             border: 3px solid blue;
         }
 
@@ -136,8 +133,8 @@
         // 记录鼠标按下时的X坐标
         downX = event.clientX;
 
-        document.getElementById("container").addEventListener("mousemove", move);
-        document.getElementById("container").addEventListener("mouseup", up);
+        document.addEventListener("mousemove", move);
+        document.addEventListener("mouseup", up);
     };
 
     /**
@@ -146,12 +143,13 @@
      * @return {void}
      * */
     let move = (event) => {
+        event.preventDefault();
         /**
          * @var {number} 本变量用于记录本次拖拽行为对图片造成的水平位移像素值
          * */
         let deltaX = event.clientX - downX;
         totalX = lastX + deltaX;
-        // console.log("totalX = " +totalX);
+        // console.log("totalX in move = " +totalX);
         // console.log("deltaX = " + deltaX);
         let children = Array.prototype.slice.call(document.getElementById("container").children);
 
@@ -167,49 +165,22 @@
      * @return {void}
      * */
     let up = (event) => {
-        // console.log("up");
         lastX = totalX;
-        console.log("totalX = " + totalX);
-        // console.log("totalX = " + Math.abs(totalX));
 
         let children = Array.prototype.slice.call(document.getElementById("container").children);
-        let inPosition = Math.round(totalX / 500);
 
-        console.log("origin inPosition = " + inPosition);
+        let inPosition = -Math.round(totalX / 500);
+        inPosition = Math.min(children.length-1, Math.max(0, inPosition));
 
-        // 比较好理解的方式
-
-        // 限制第1张图片向右移动
-        if (inPosition >= 1 && totalX > 0) {
-            inPosition = 0;
-        }
-
-        // 限制最后1张图片向左移动
-        if(inPosition <= -4 && totalX < 0) {
-            inPosition = -3;
-        }
-
-        console.log("after change inPosition = " + inPosition);
-
-        lastX = inPosition * 500;
-
-        if(totalX >= 0) {
-            lastX = inPosition * 500;
-        }
-
-        if (totalX < 0) {
-            lastX = inPosition * -500;
-        }
-
-        // lastX = inPosition * 500;
+        lastX = inPosition * -500;
 
         for (let child of children) {
             child.style.transition = "";
             child.style.transform = `translate(${lastX}px)`;
         }
 
-        document.getElementById("container").removeEventListener("mousemove", move);
-        document.getElementById("container").removeEventListener("mouseup", up);
+        document.removeEventListener("mousemove", move);
+        document.removeEventListener("mouseup", up);
     };
 
     document.getElementById("container").addEventListener("mousedown", down);

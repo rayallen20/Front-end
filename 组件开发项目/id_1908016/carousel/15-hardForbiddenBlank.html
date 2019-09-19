@@ -143,12 +143,13 @@
      * @return {void}
      * */
     let move = (event) => {
+        event.preventDefault();
         /**
          * @var {number} 本变量用于记录本次拖拽行为对图片造成的水平位移像素值
          * */
         let deltaX = event.clientX - downX;
         totalX = lastX + deltaX;
-        // console.log("totalX = " +totalX);
+        // console.log("totalX in move = " +totalX);
         // console.log("deltaX = " + deltaX);
         let children = Array.prototype.slice.call(document.getElementById("container").children);
 
@@ -166,26 +167,22 @@
     let up = (event) => {
         // console.log("up");
         lastX = totalX;
-        console.log("totalX = " + totalX);
+        // console.log("totalX = " + totalX);
         // console.log("totalX = " + Math.abs(totalX));
 
         let children = Array.prototype.slice.call(document.getElementById("container").children);
-        let inPosition = Math.round(totalX / 500);
-        console.log("before first change sign = " + inPosition);
-        inPosition = -inPosition;
-        console.log("after first change sign = " + inPosition);
+        let inPosition = -Math.round(totalX / 500);
 
-        inPosition = Math.min(inPosition, children.length - 1);
-        console.log("after min of inPosition and length = ", inPosition);
+        // console.log("origin inPosition = " + inPosition);
 
-        inPosition = Math.max(0, inPosition);
-        console.log("after max of inPosition and 0 = " + inPosition);
+        inPosition = Math.min(children.length-1, Math.max(0, inPosition));
 
-        console.log("before second change sign = " + inPosition);
-        // inPosition = -inPosition;
-        console.log("after second change sign = " + inPosition);
+        // console.log("after change inPosition = " + inPosition);
+
         lastX = inPosition * -500;
-        console.log(lastX);
+
+        // console.log("final count lastX = " + lastX);
+        // console.log("final totalX = " + totalX);
 
         for (let child of children) {
             child.style.transition = "";
