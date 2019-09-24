@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper {
+            width: 300px;
+            height: 300px;
+            margin: 100px auto;
+            border: 5px solid navy;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper"></div>
+<script>
+    let wrapper = document.getElementById("wrapper");
+
+    let clickEventHandler1 = (event) => {
+        alert("clickEventHandler1");
+    };
+
+    let clickEventHandler2 = (event) => {
+        alert("clickEventHandler2");
+    };
+
+    wrapper.onmousedown = clickEventHandler1;
+    wrapper.onmousedown = clickEventHandler2;
+
+</script>
+</body>
+</html>

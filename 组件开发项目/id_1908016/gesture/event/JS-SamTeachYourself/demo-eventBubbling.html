@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper {
+            width: 500px;
+            height: 500px;
+            margin: 100px auto;
+            border: 5px solid cornflowerblue;
+        }
+
+        #inner {
+            width: 300px;
+            height: 300px;
+            margin: 100px auto;
+            border: 5px solid skyblue;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="inner">
+
+    </div>
+</div>
+
+<script>
+    let wrapper = document.getElementById("wrapper");
+    let inner = document.getElementById("inner");
+
+    let wrapperMousedownEventHandler = (event) => {
+        alert("wrapper alert");
+    };
+
+    let innerMousedownEventHandler = (event) => {
+        alert("inner alert");
+    };
+
+    wrapper.addEventListener("mousedown", wrapperMousedownEventHandler, false);
+    inner.addEventListener("mousedown", innerMousedownEventHandler, false);
+</script>
+</body>
+</html>

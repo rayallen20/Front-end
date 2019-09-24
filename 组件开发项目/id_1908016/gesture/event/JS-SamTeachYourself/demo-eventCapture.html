@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper {
+            width: 500px;
+            height: 500px;
+            margin: 100px auto;
+            border: 5px solid cornflowerblue;
+        }
+
+        #inner {
+            width: 300px;
+            height: 300px;
+            margin: 100px auto;
+            border: 5px solid skyblue;
+        }
+
+        #inner2 {
+            width: 150px;
+            height: 150px;
+            margin: 75px auto;
+            border: 5px solid aqua;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="inner">
+        <div id="inner2"></div>
+    </div>
+</div>
+
+<script>
+    let wrapper = document.getElementById("wrapper");
+    let inner = document.getElementById("inner");
+    let inner2 = document.getElementById("inner2");
+
+    let wrapperMousedownEventHandler = (event) => {
+        alert("wrapper alert");
+    };
+
+    let innerMousedownEventHandler = (event) => {
+        alert("inner alert");
+    };
+
+    let inner2MousedownEventHandler = (event) => {
+        alert("inner2 alert");
+    };
+
+    // wrapper.addEventListener("mousedown", wrapperMousedownEventHandler, true);
+    // inner.addEventListener("mousedown", innerMousedownEventHandler, true);
+
+    // TODO: 如下写法 给inner的mousedown事件设置为捕获 给wrapper的mousedown事件设置为冒泡
+    // TODO: 点击inner 还是会先触发inner的callback 为什么?
+    wrapper.addEventListener("mousedown", wrapperMousedownEventHandler, false);
+    inner.addEventListener("mousedown", innerMousedownEventHandler, true);
+    inner2.addEventListener("mousedown", inner2MousedownEventHandler, false);
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="https://www.baidu.com/" target="_blank" id="go">GO TO BaiDu</a>
+<a href="https://www.baidu.com/" target="_blank" id="notGo">NOT GO TO BaiDu</a>
+<script>
+    let go = document.getElementById("go");
+    let notGo = document.getElementById("notGo");
+
+    let allowGo = (event) => {
+        alert("allow go to baiDu");
+    };
+
+    let forbiddenGo = (event) => {
+        event.preventDefault();
+        alert("forbidden go to baiDu");
+    };
+
+    go.addEventListener("click", allowGo);
+    notGo.addEventListener("click", forbiddenGo);
+</script>
+</body>
+</html>
